@@ -814,7 +814,23 @@ void SetSettings( void )
 				}
 				break;
 			}
-			case 12: //ignore ios reloading for system menu?
+			case 12:
+			{
+				if ( pressed & INPUT_BUTTON_LEFT				|| 
+					 pressed & INPUT_BUTTON_RIGHT				|| 
+					 pressed & INPUT_BUTTON_A
+					)
+				{
+					if( settings->DisableIOSSignatureChecks )
+						settings->DisableIOSSignatureChecks = 0;
+					else 
+						settings->DisableIOSSignatureChecks = 1;
+				
+					redraw=true;
+				}
+				break;
+			} 
+			case 13: //ignore ios reloading for system menu?
 			{
 				if ( pressed & INPUT_BUTTON_LEFT				|| 
 					 pressed & INPUT_BUTTON_RIGHT				|| 
@@ -846,7 +862,7 @@ void SetSettings( void )
 				}
 				break;
 			}
-			case 13:		//	System Menu IOS
+			case 14:		//	System Menu IOS
 			{
 				if ( pressed & INPUT_BUTTON_LEFT )
 				{
@@ -884,7 +900,7 @@ void SetSettings( void )
 				}
 				break;
 			} 
-			case 14:
+			case 15:
 			{
 				if ( pressed & INPUT_BUTTON_A )
 				{
@@ -895,7 +911,7 @@ void SetSettings( void )
 				}
 				break;
 			} 
-			case 15:
+			case 16:
 			{
 				if ( pressed & INPUT_BUTTON_A )
 				{
@@ -911,19 +927,19 @@ void SetSettings( void )
 		if ( pressed & INPUT_BUTTON_DOWN )
 		{
 			cur_off++;
-			if( (settings->UseSystemMenuIOS) && (cur_off == 13))
+			if( (settings->UseSystemMenuIOS) && (cur_off == 14))
 				cur_off++;
-			if( cur_off >= 16)
+			if( cur_off >= 17)
 				cur_off = 0;
 			
 			redraw=true;
 		} else if ( pressed & INPUT_BUTTON_UP )
 		{
 			cur_off--;
-			if( (settings->UseSystemMenuIOS) && (cur_off == 13))
+			if( (settings->UseSystemMenuIOS) && (cur_off == 14))
 				cur_off--;
 			if( cur_off < 0 )
-				cur_off = 15;
+				cur_off = 16;
 			
 			redraw=true;
 		}
@@ -1016,17 +1032,18 @@ void SetSettings( void )
 			PrintFormat( cur_off==9, 0, 128+(16*8), "     Dump Gecko output:          %s", settings->DumpGeckoText?"on ":"off");
 			PrintFormat( cur_off==10,0, 128+(16*9), "       Show RC Updates:          %s", settings->ShowRCUpdates?"on ":"off");
 			PrintFormat( cur_off==11,0, 128+(16*10),"    Default fat device:          %s", fatDevice.c_str());
-			PrintFormat( cur_off==12,0, 128+(16*11),"   Use System Menu IOS:          %s", settings->UseSystemMenuIOS?"on ":"off");
+			PrintFormat( cur_off==12,0, 128+(16*11)," Skip signature checks:          %s", settings->DisableIOSSignatureChecks?"on ":"off");
+			PrintFormat( cur_off==13,0, 128+(16*12),"   Use System Menu IOS:          %s", settings->UseSystemMenuIOS?"on ":"off");
 			if(!settings->UseSystemMenuIOS)
 			{
-				PrintFormat( cur_off==13, 0, 128+(16*12), "     IOS to use for SM:          %d  ", (u32)(TitleIDs[IOS_off]&0xFFFFFFFF) );
+				PrintFormat( cur_off==14, 0, 128+(16*13), "     IOS to use for SM:          %d  ", (u32)(TitleIDs[IOS_off]&0xFFFFFFFF) );
 			}
 			else
 			{
-				PrintFormat( cur_off==13, 0, 128+(16*12),	"                                        ");
+				PrintFormat( cur_off==14, 0, 128+(16*13),	"                                        ");
 			}
-			PrintFormat( cur_off==14, 114, 128+(16*15), "save settings         ");
-			PrintFormat( cur_off==15, 114, 128+(16*16), "  Exit Menu");
+			PrintFormat( cur_off==15, 114, 128+(16*15), "save settings         ");
+			PrintFormat( cur_off==16, 114, 128+(16*16), "  Exit Menu");
 
 			redraw = false;
 		}

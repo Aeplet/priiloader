@@ -43,6 +43,7 @@ typedef struct {
 	u8 PasscheckMenu;
 	u8 ShowRCUpdates;
 	u8 PreferredMountPoint;
+	u8 DisableIOSSignatureChecks;
 } ATTRIBUTE_ALIGN(32) Settings;
 
 enum {
@@ -60,6 +61,7 @@ enum {
 		SETTING_PASSCHECKPRII,
 		SETTING_PASSCHECKMENU,
 		SETTING_SHOWRCUPDATES,
+		SETTING_DISABLEIOSSIGNATURECHECKS
 };
 
 enum {

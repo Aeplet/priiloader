@@ -47,6 +47,7 @@ static u32 Create_Settings_File( void )
 	settings->UseSystemMenuIOS = 1;
 	settings->autoboot = AUTOBOOT_SYS;
 	settings->BlackBackground = 1;
+	settings->DisableIOSSignatureChecks = 1;
 	fd = ISFS_Open("/title/00000001/00000002/data/loader.ini", ISFS_OPEN_WRITE );
 	if( fd < 0 )
 	{
@@ -96,6 +97,8 @@ u32 SGetSetting( u32 s )
 			return settings->PasscheckMenu;
 		case SETTING_SHOWRCUPDATES:
 			return settings->ShowRCUpdates;
+		case SETTING_DISABLEIOSSIGNATURECHECKS:
+			return settings->DisableIOSSignatureChecks;
 		default:
 			return 0;
 		break;

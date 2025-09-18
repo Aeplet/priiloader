@@ -625,6 +625,13 @@ void BootMainSysMenu( void )
 			PatchvWiiSysMenu(mem_block, max_address);
 		}
 
+		// Patch the System Menu's IOS to disable signature checks if the option is enabled
+		if (settings->DisableIOSSignatureChecks)
+		{
+			gprintf("Patching IOS signature checks");
+			PatchIOS({FakeSignPatch});
+		}
+
 		//prepare loader
 		loader_addr = static_cast<void*>(mem_align(32,loader_bin_size));
 		if(!loader_addr)
